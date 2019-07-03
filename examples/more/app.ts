@@ -133,9 +133,39 @@ import qs from 'qs'
 //   console.log(res)
 // })
 
-const instance = axios.create({
-  baseURL: 'https://img.mukewang.com/'
-})
+// const instance = axios.create({
+//   baseURL: 'https://img.mukewang.com/'
+// })
 
-instance.get('5cc01a7b0001a33718720632.jpg')
-instance.get('http://img.mukewang.com/5cc01a7b0001a33718720632.jpg')
+// instance.get('5cc01a7b0001a33718720632.jpg')
+// instance.get('http://img.mukewang.com/5cc01a7b0001a33718720632.jpg')
+
+
+function getA() {
+  return axios.get('/more/A')
+}
+function getB() {
+  return axios.get('/more/B')
+}
+axios.all([getA(), getB()])
+  .then(axios.spread((resA, resB) => {
+    console.log(resA.data)
+    console.log(resB.data)
+  }))
+
+axios.all([getA(), getB()])
+  .then(([resA, resB]) => {
+    console.log(resA.data)
+    console.log(resB.data)
+  })
+
+const fakeConfig = {
+  baseURL: 'https://www.baidu.com/',
+  url: '/user/123',
+  params: {
+    idClient: 1,
+    idTest: 2,
+    testString: 'thisIsATest'
+  }
+}
+console.log(axios.getUri(fakeConfig))
