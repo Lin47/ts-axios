@@ -7,6 +7,7 @@ const webpackDevMiddleWare = require('webpack-dev-middleware')
 const webpackHotMiddleWare = require('webpack-hot-middleware')
 const WebpackConfig = require('./webpack.config')
 const path = require('path')
+const atob = require('atob')
 
 require('./server2')
 
@@ -113,6 +114,18 @@ router.post('/more/upload', function(req, res) {
   res.end('upload success')
 })
 
+router.post('/more/post', function(req, res) {
+  const auth = req.headers.authorization
+  const [type, credentials] = auth.split(' ')
+  console.log(atob(credentials))
+  const [username, password] = atob(credentials).split(':')
+  if (type === 'Basic' && username === 'abc' && password === 'fff') {
+    res.json(req.body)
+  } else {
+    res.status(401)
+    res.end('Unauthorization')
+  }
+})
 
 app.use(router)
 
