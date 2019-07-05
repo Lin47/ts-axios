@@ -57,21 +57,19 @@ export function buildURL(
     })
 
     serializedPrams = parts.join('&')
-  }
-
-  if (serializedPrams) {
-    const markIndex = url.indexOf('#')
-    if (markIndex !== -1) {
-      url.slice(0, markIndex)
+    if (serializedPrams) {
+      const markIndex = url.indexOf('#')
+      if (markIndex !== -1) {
+        url.slice(0, markIndex)
+      }
+      url += (url.indexOf('?') === -1 ? '?' : '&') + serializedPrams
     }
-    url += (url.indexOf('?') === -1 ? '?' : '&') + serializedPrams
   }
-
   return url
 }
 
 export function isAbsoluteURL(url: string): boolean {
-  return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
 }
 
 export function combineURL(baseURL: string, relativeURL?: string): string {
